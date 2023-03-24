@@ -23,6 +23,27 @@
 	
 	<context:component-scan base-package="com.kh.spring" />
 	
-	
+	<!-- 
+		* 사용자가 어떤 url로 요청시 해당 이 문서가 읽혀진다고 보면 됨
+		HandlerMapping을 통해서 어떤 url로 요청시 어던 Controller를 구동시킬건지 알아내야함 => 해당 Controller기 실행되도록
+		
+		1. 요청 때마다 실행될 Controller 클래스들이 빈으로 등록되어 있어야함
+		2. 어떤 url로 요청시 어떤 Controller를 구동시킬건지 매핑시키는 HandlerMapping 관련한 클래스 빈으로 등록해야됨
+		
+		1번 예시 (빈등록 : xml 등록)
+		<beans:bean class="com.kh.spring.member.controller.Logincontroller id="loginController"/>
+		<beans:bean class="com.kh.spring.member.controller.Logoutcontroller id="logoutController"/>
+		
+		1번 예시 (어노테이션 방법)
+		@Controller
+		
+		2번 예시
+		<beans: bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping>
+			<beans:property name="mappings">
+				<beans:prop key="login.me"></beans:prop>
+				<beans:prop key="logout.me"></beans:prop>
+			</beans>
+		</beans>
+	 -->
 	
 </beans:beans>
