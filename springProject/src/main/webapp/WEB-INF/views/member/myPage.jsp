@@ -40,8 +40,10 @@
                        
                        <label for=""> &nbsp; Gender : </label> &nbsp;&nbsp;
                        <input type="radio" name="gender" id="Male" value="M">
+              		   <%-- <input type="radio" name="" id="Male" value="M" ${loginUser.gender eq 'M' ? "checked" : '' }> --%>
                        <label for="Male">남자</label> &nbsp;&nbsp;
                        <input type="radio" name="gender" id="Female" value="F">
+                   	   <%-- <input type="radio" name="" id="Female" value="F" ${loginUser.gender eq 'F' ? "checked" : '' }> --%>
                        <label for="Female">여자</label><br>
                        
                    </div>
