@@ -9,6 +9,8 @@
 	<result column="count" property="count"/>
 	<result column="create_date" property="createDate"/>
 	<result column="origin_name" property="originName"/>
+	<result column="change_name" property="changeName"/>
+	<result column="board_content" property="boardContent"/>
 </resultMap>
 
 	<select id="selectListCount" resultType="_int">
@@ -30,5 +32,48 @@
 		 where status = 'Y'
 		 order
 		    by board_no desc
+	</select>
+	
+	<insert id="insertBoard">
+		insert
+		  into board
+		     (
+		       board_no
+		     , board_title
+		     , board_writer
+		     , board_content
+		     , origin_name
+		     , change_name
+		     )
+		     values
+		     (
+		       seq_bno.nextval
+		     , #{boardTitle}
+		     , #{boardWriter}
+		     , #{boardContent}
+		     , #{originName}
+		     , #{changeName}
+		     )
+	</insert>
+	
+	<update id="increaseCount">
+		update
+		       board
+		   set count = count + 1
+		 where board_no = #{boardNo}
+		   and status = 'Y'
+	</update>
+	
+	<select id="selectBoard" resultMap="boardResultSet">
+		select
+			   board_no
+			 , board_title
+		     , board_writer
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , origin_name
+		     , change_name
+		     , board_content
+		  from board
+		 where board_no = #{boardNo}
 	</select>
 </mapper>
