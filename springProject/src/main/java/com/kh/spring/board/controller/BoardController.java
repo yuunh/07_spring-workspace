@@ -74,6 +74,13 @@ public class BoardController {
 		return "board/boardEnrollForm";
 	}
 	
+	/*
+	 * * 만약 다중파일 업로드 기능시?
+	 * 	 여러개의 input type = "file" 요소에 다 동일한 키값으로 부여 (ex. upfile)
+	 * 	 MultipartFile[] upfile로 받으면 됨 (0번 인덱스부터 첨부파일이 담겨 있음) => 반복문 돌려가면서 수행
+	 * 	 파일 여러개 올릴 거면 디비 설게시 첨부파일만을 담을 수 있는 테이블로 셋팅할 것!
+	 */
+	
 	@RequestMapping("insert.bo")
 	public String insertBoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
 		// System.out.println(b);
@@ -140,7 +147,7 @@ public class BoardController {
 	@RequestMapping("detail.bo")
 	public ModelAndView selectBoard(int bno, Model model, ModelAndView mv) {
 		// bno에는 상세조회하고자 하는 해당 게시글 번호 담겨있음
-		System.out.println(bno);
+		// System.out.println(bno);
 		// 해당 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
 		int result = bService.increaseCount(bno);
 		
@@ -172,6 +179,82 @@ public class BoardController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("delete.bo")
+	public String deleteBoard(int bno, String filePath, HttpSession session, Model model) {
+		
+		int result = bService.deleteBoard(bno);
+		
+		if (result > 0) { // 삭제 성공
+			// 첨부파일이 있을 경우 => 파일 삭제
+			if (!filePath.equals("")) { // filePath = "resources/xxx/xxx.jsp"
+				new File(session.getServletContext().getRealPath(filePath)).delete(); // 서버에 업로드된 파일을 삭제함
+			}
+			
+			// 게시판 리스트 페이지 list.bo.url 재요청
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+			return "redirect:list.bo";
+		} else { // 삭제 실패
+			// 에러문구 담아서 에러페이지 포워딩(모델)
+			model.addAttribute("errorMsg", "게시글 삭제 실패!");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("updateForm.bo")
+	public String updateForm(int bno, Model model) {
+		// 해당 게시글 조회수 셋팅
+		model.addAttribute("b", bService.selectBoard(bno));
+		return "board/boardUpdateForm"; // 포워딩(모델)
+	}
+	
+	@RequestMapping("update.bo")
+	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		// 새로 넘어온 첨부파일이 있을 경우
+		if (!reupfile.getOriginalFilename().equals("")) {
+			
+			// 기존에 첨부파일이 있었을 경우 => 기존 첨부파일 지우기
+			if (b.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getChangeName())).delete();
+			}
+			
+			// 새로 넘어온 첨부파일 서버 업로드 시키기
+			String changeName = saveFile(reupfile, session);
+			
+			// b에 새로 넘어온 첨부파일에 대한 원본명, 저장 경로 담기
+			b.setOriginName(reupfile.getOriginalFilename());
+			b.setChangeName("resources/uploadFiles/" + changeName);
+		}
+		
+		/*
+		 * b에 boardNo, boardTitle, boardContent 무조건 담겨 있음!!
+		 * 
+		 * 1. 새로 첨부된 파일 x, 기존 첨부 파일 x
+		 * 	=> originName : null, changeName : null
+		 * 
+		 * 2. 새로 첨부된 파일 x, 기존 첨부파일 o
+		 * 	=> originName : 기존 첨부 파일 원본명, changeName : 기존 첨부 파일 저장 경로
+		 * 
+		 * 3. 새로 첨부된 파일 o, 기존 첨부 파일 x
+		 * 	=> originName : 새로운 첨부 파일 원본명, changeName : 새로운 첨부 파일 저장 경로
+		 * 
+		 * 4. 새로 첨부된 파일 o, 기존 첨부 파일 o
+		 * 	=> originName : 새로운 첨부 파일 원본명, changeName : 새로운 첨부 파일 저장 경로
+		 */
+		
+		int result = bService.updateBoard(b);
+		System.out.println(b.getBoardNo() + "545445" + result);
+		if (result > 0) { // 수정 성공 => 상세페이지
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			return "redirect:detail.bo?bno=" + b.getBoardNo();
+		} else { // 수정 실패 => 에러페이지 포워딩(모델)
+			model.addAttribute("errorMsg", "게시글 수정 실패!");
+			return "common/errorPage";
+		}
+	}
+	
+	
 	
 	// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할
 	public String saveFile(MultipartFile upfile, HttpSession session) {

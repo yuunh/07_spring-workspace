@@ -23,7 +23,7 @@ public interface BoardService {
 	int deleteBoard(int boardNo);
 	
 	// 5. 게시글 수정용 서비스
-	int updateBoard(int boardNo, Board b);
+	int updateBoard(Board b);
 	
 	// 6. 댓글 리스트 조회 서비스 (ajax)
 	ArrayList<Reply> selectReplyList(int boardNo);
