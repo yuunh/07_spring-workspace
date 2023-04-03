@@ -244,7 +244,7 @@ public class BoardController {
 		 */
 		
 		int result = bService.updateBoard(b);
-		System.out.println(b.getBoardNo() + "545445" + result);
+
 		if (result > 0) { // 수정 성공 => 상세페이지
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
 			return "redirect:detail.bo?bno=" + b.getBoardNo();
