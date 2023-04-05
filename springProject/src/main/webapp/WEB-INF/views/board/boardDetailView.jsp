@@ -92,9 +92,7 @@
                 		<c:when test="${ empty loginUser }">
 		                	<tr>
 		                        <th colspan="2">
-		                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%" readonly>
-		                            로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용해주세요!
-		                            </textarea>
+		                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용해주세요!</textarea>
 		                        </th>
 		                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
 		                    </tr>
@@ -104,30 +102,15 @@
 		                        <th colspan="2">
 		                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
 		                        </th>
-		                        <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
+		                        <th style="vertical-align: middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
 		                    </tr>
 	                    </c:otherwise>
                 	</c:choose>    
                     <tr>
-                       <td colspan="3">댓글 (<span id="rcount">3</span>) </td> 
+                       <td colspan="3">댓글 (<span id="rcount">0</span>) </td> 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>user02</th>
-                        <td>댓글입니다.너무웃기다앙</td>
-                        <td>2023-03-03</td>
-                    </tr>
-                    <tr>
-                        <th>user01</th>
-                        <td>많이봐주세용</td>
-                        <td>2023-01-08</td>
-                    </tr>
-                    <tr>
-                        <th>admin</th>
-                        <td>댓글입니다ㅋㅋㅋ</td>
-                        <td>2022-12-02</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -139,12 +122,50 @@
 			selectReplyList(); // 화면이 랜더링 되자마다 댓글 조회를 하겠다
 		})
 		
+		function addReply() { // 댓글작성용 ajax
+			if ($("#content").val().trim().length != 0) { // 유효한 댓글 작성시 => insert ajax 요청
+				
+				$.ajax({
+					url: "rinsert.bo",
+					data: {
+						refBoardNo: ${ b.boardNo},
+						replyContent: $("#content").val(),
+						replyWriter: '${ loginUser.userId }' // 문자열은 이렇게 묶어야함
+					}, 
+					success: function(status) {
+						if (status == "success") {
+							selectReplyList(); // 등록 버튼 클릭시 리스트 조회
+							$("#content").val(""); // 댓글창에 작성한 댓글 초기화
+						}
+					},
+					error: function() {
+						console.log("댓글 작성용 ajax 통신 실패!");
+					}
+				})
+			} else {
+				alertify.alert("댓글 작성 후 등록 요청해주세요!");
+			}
+		}
+		
 		function selectReplyList() { // 해당 게시글에 달린 댓글리스트 조회용 ajax
 			$.ajax({
 				url: "rlist.bo",
 				data: {bno: ${ b.boardNo }},
 				success: function(list) {
-					console.log(list)
+					console.log(list);
+					
+					let value = "";
+					
+					for ( let i in list) {
+						value += "<tr>"
+							   + "<th>" + list[i].replyWriter + "</th>"
+							   + "<td>" + list[i].replyContent + "</td>"
+							   + "<td>" + list[i].createDate + "</td>"
+							   + "</tr>";
+					}
+					
+					$("#replyArea tbody").html(value);
+					$("#rcount").text(list.length);
 				},
 				error: function() {
 					console.log("댓글 리스트 조회용 ajax 통신 실패!");

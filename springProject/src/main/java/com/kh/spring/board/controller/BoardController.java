@@ -295,4 +295,13 @@ public class BoardController {
 		
 		return new Gson().toJson(list);
 	}
+	
+	@ResponseBody
+	@RequestMapping("rinsert.bo")
+	public String ajaxInsertReply(Reply r) {
+		System.out.println(r + "54364");
+		int result = bService.insertReply(r);
+		
+		return result > 0 ? "success" : "fail";
+	}
 }
