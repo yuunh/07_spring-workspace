@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class Test {
 
-	@Scheduled(cron = "*/1 * * * * ?")
-	public void test1() {
-		System.out.println("스케줄링테스트");
-	}
+	// */1 * * * * ?
+	/*
+	 * @Scheduled(cron = "*1 * * * * ?") 
+	 * public void test1() {
+	 * System.out.println("스케줄링테스트"); }
+	 */
 }

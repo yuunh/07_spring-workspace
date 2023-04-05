@@ -88,12 +88,26 @@
             <!-- 댓글 기능은 나중에 ajax 배우고 접목시킬예정! 우선은 화면구현만 해놓음 -->
             <table id="replyArea" class="table" align="center">
                 <thead>
-                    <tr>
-                        <th colspan="2">
-                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
-                        </th>
-                        <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
-                    </tr>
+                	<c:choose>
+                		<c:when test="${ empty loginUser }">
+		                	<tr>
+		                        <th colspan="2">
+		                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%" readonly>
+		                            로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용해주세요!
+		                            </textarea>
+		                        </th>
+		                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
+		                    </tr>
+                    	</c:when>
+                    	<c:otherwise>
+		                    <tr>
+		                        <th colspan="2">
+		                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
+		                        </th>
+		                        <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
+		                    </tr>
+	                    </c:otherwise>
+                	</c:choose>    
                     <tr>
                        <td colspan="3">댓글 (<span id="rcount">3</span>) </td> 
                     </tr>
@@ -119,6 +133,25 @@
         </div>
         <br><br>
     </div>
+    
+    <script>
+    	$(function() {
+			selectReplyList(); // 화면이 랜더링 되자마다 댓글 조회를 하겠다
+		})
+		
+		function selectReplyList() { // 해당 게시글에 달린 댓글리스트 조회용 ajax
+			$.ajax({
+				url: "rlist.bo",
+				data: {bno: ${ b.boardNo }},
+				success: function(list) {
+					console.log(list)
+				},
+				error: function() {
+					console.log("댓글 리스트 조회용 ajax 통신 실패!");
+				}
+			});
+		}
+    </script>
 
     <!-- 이쪽에 푸터바 포함할꺼임 -->
     <jsp:include page="../common/footer.jsp"/>
