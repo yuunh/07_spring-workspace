@@ -61,23 +61,53 @@
             </table>
             <br>
 
-            <div align="center">
-                <!-- 수정하기, 삭제하기 버튼은 이글이 본인글일 경우만 보여져야됨 -->
-	                <a class="btn btn-primary" onclick="">수정하기</a> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
-	                <a class="btn btn-danger" onclick="">삭제하기</a>
-            </div><br><br>
-            
+			<c:if test="${not empty loginUser.userId and loginUser.userId eq b.boardWriter }">
+	            <div align="center">
+	                <!-- 수정하기, 삭제하기 버튼은 이글이 본인글일 경우만 보여져야됨 -->
+		                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a> <!-- 요기에 href="" 를 작성하면 get방식이기 떄문에 노출된다. -->
+		                <a class="btn btn-danger" onclick="postFormSubmit(2)">삭제하기</a>
+	            </div><br><br>
+	            
+	            <form id="postForm" action="" method="post">
+	            	<input type="hidden" name="bno" value="${ b.boardNo }">
+	            	<input type="hidden" name="filePath" value="${ b.changeName }">
+	            </form>
+	            
+	            <script>
+	            	function postFormSubmit(num) {
+						if (num == 1) { // 수정하기 클릭 시
+							$("#postForm").attr("action", "updateForm.bo").submit();	
+						} else { // 삭제하기 클릭 시
+							$("#postForm").attr("action", "delete.bo").submit();
+						}
+					}
+	            </script>
+            </c:if>
     
 
             <!-- 댓글 기능은 나중에 ajax 배우고 접목시킬예정! 우선은 화면구현만 해놓음 -->
             <table id="replyArea" class="table" align="center">
                 <thead>
-                    <tr>
-                        <th colspan="2">
-                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
-                        </th>
-                        <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
-                    </tr>
+                	<c:choose>
+                		<c:when test="${ empty loginUser }">
+		                	<tr>
+		                        <th colspan="2">
+		                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%" readonly>
+		                            로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용해주세요!
+		                            </textarea>
+		                        </th>
+		                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
+		                    </tr>
+                    	</c:when>
+                    	<c:otherwise>
+		                    <tr>
+		                        <th colspan="2">
+		                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
+		                        </th>
+		                        <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
+		                    </tr>
+	                    </c:otherwise>
+                	</c:choose>    
                     <tr>
                        <td colspan="3">댓글 (<span id="rcount">3</span>) </td> 
                     </tr>
@@ -103,6 +133,25 @@
         </div>
         <br><br>
     </div>
+    
+    <script>
+    	$(function() {
+			selectReplyList(); // 화면이 랜더링 되자마다 댓글 조회를 하겠다
+		})
+		
+		function selectReplyList() { // 해당 게시글에 달린 댓글리스트 조회용 ajax
+			$.ajax({
+				url: "rlist.bo",
+				data: {bno: ${ b.boardNo }},
+				success: function(list) {
+					console.log(list)
+				},
+				error: function() {
+					console.log("댓글 리스트 조회용 ajax 통신 실패!");
+				}
+			});
+		}
+    </script>
 
     <!-- 이쪽에 푸터바 포함할꺼임 -->
     <jsp:include page="../common/footer.jsp"/>

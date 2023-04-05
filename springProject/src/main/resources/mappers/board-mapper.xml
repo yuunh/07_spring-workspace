@@ -13,6 +13,13 @@
 	<result column="board_content" property="boardContent"/>
 </resultMap>
 
+<resultMap type="reply" id="replyResultSet">
+	<result column="reply_no" property="replyNo"/>
+	<result column="reply_writer" property="replyWriter"/>
+	<result column="reply_content" property="replyContent"/>
+	<result column="create_date" property="createDate"/>
+</resultMap>
+
 	<select id="selectListCount" resultType="_int">
 		select
 			   count(*)
@@ -75,5 +82,35 @@
 		     , board_content
 		  from board
 		 where board_no = #{boardNo}
+	</select>
+	
+	<update id="deleteBoard">
+		update
+			   board
+		   set status = 'N'
+		 where board_no = #{boardNo}
+	</update>
+	
+	<update id="updateBoard">
+		update
+			   board
+		   set board_title = #{boardTitle}
+		     , board_content = #{boardContent}
+		     , origin_name = #{originName}
+		     , change_name = #{changeName}
+		 where board_no = #{boardNo}
+	</update>
+	
+	<select id="selectReplyList" resultMap="replyResultSet">
+		select
+			   reply_no
+			 , reply_writer
+			 , reply_content
+			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from reply
+		 where ref_bno = #{boardNo}
+		   and status = 'Y'
+		 order
+		    by reply_no desc
 	</select>
 </mapper>
