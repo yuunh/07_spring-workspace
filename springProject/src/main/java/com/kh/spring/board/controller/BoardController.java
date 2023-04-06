@@ -299,9 +299,20 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping("rinsert.bo")
 	public String ajaxInsertReply(Reply r) {
-		System.out.println(r + "54364");
+
 		int result = bService.insertReply(r);
 		
 		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "topList.bo", produces = "application/json; charset=UTF-8")
+	public String ajaxTopBoardList() {
+		
+		ArrayList<Board> list = bService.selectTopBoardList();
+		
+		// System.out.println(new Gson().toJson(list));
+		
+		return new Gson().toJson(list);
 	}
 }
