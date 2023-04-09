@@ -46,5 +46,13 @@
 		</beans>
 	 -->
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/myPage.me"/>
+			<mapping path="/update.me"/>
+			<mapping path="/enrollForm.bo"/>
+			<beans:bean class="com.kh.spring.common.interceptor.LoginInterceptor" id="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

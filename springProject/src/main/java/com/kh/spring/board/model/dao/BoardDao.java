@@ -64,4 +64,9 @@ public class BoardDao {
 		
 		return sqlSession.insert("boardMapper.insertReply", r);
 	}
+	
+	public ArrayList<Board> selectTopBoardList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTopBoardList");
+	}
 }
