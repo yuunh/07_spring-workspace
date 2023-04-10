@@ -51,7 +51,7 @@ public class APIController {
 	@ResponseBody
 	@RequestMapping(value = "bus.do", produces = "application/json; charset=UTF-8")
 	public String busRouteList(String route) throws IOException {
-		System.out.println(route);
+
 		String url = "http://ws.bus.go.kr/api/rest/busRouteInfo/getRoutePath";
 		url += "?serviceKey=" + servicekey;
 		url += "&strSrch=" + URLEncoder.encode(route, "UTF-8");

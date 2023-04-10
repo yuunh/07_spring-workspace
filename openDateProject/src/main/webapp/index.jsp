@@ -83,12 +83,12 @@
 	<table id="result2" border="1" align="center">
 		<thead>
 			<tr>
-				<th>노선</th>
-				<th>정류소</th>
-				<th>방향</th>
-				<th>노선유형</th>
-				<th>첫차시간</th>
-				<th>막차시간</th>
+				<td>노선</td>
+				<td>정류소</td>
+				<td>방향</td>
+				<td>노선유형</td>
+				<td>첫차시간</td>
+				<td>막차시간</td>
 			</tr>
 		</thead>
 		<tbody></tbody>
@@ -116,10 +116,10 @@
 							   + "<td>" + item.lastTm + "</td>"
 							   + "</tr>";
 					}
-					
+			
 					$("#result2 tbody").html(value);
 				},
-				error : function() {
+				error : function(data) {
 					console.log("ajax 통신 실패!");
 				}
 			})
