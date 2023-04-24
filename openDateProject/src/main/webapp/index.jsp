@@ -321,5 +321,185 @@
 		*/
 	</script>	
 	
+	<hr>
+	
+	<h1>재진/해일 대피소 안내</h1>
+	<input type="button" value="실행" id="btn" />
+	<div id="result"></div>
+	<script>
+	$("#btn").click(() => {
+		$.ajax({
+			success : data => {
+				var $table = $("<table></table>"); //동적으로 생성할 table 태그 선언
+				var $thead = $("<thead></thead>");
+				var header = "<tr>"
+							+ "<td>일렬번호</td>"
+							+ "<td>시도명</td>"
+							+ "<td>시군구명</td>"
+							+ "<td>대피지구명</td>"
+							+ "<td>대피장소명</td>"
+							+ "<td>주소</td>"
+							+ "<td>경도</td>"
+							+ "<td>위도</td>"
+							+ "<td>수용가능인원(명)</td>"
+							+ "<td>해변으로부터거리</td>"
+							+ "<td>대피소분류명</td>"
+							+ "<td>내진적용여부</td>"
+							+ "<td>해발높이</td>"
+							+ "</tr>";
+							
+				$thead.html(header);
+				
+				let $tbody = $("<tbody></tbody>");
+				let bodyTr = "";
+				
+				$(data).find("row").each((i, row) => {
+					bodyTr += "<tr>"
+							+ "<td>" + $(row).find("id").text() + "</td>"
+							+ "<td>" + $(row).find("sido_name").text() + "</td>"
+							+ "<td>" + $(row).find("sigungu_name").text() + "</td>"
+							+ "<td>" + $(row).find("remarks").text() + "</td>" 
+							+ "<td>" + $(row).find("remarks").text() + "</td>"​
+							+ "<td>" + $(row).find("shel_nm").text() + "</td>"
+							+ "<td>" + $(row).find("address").text() + "</td>"
+							+ "<td>" + $(row).find("lon").text() + "</td>"​
+							+ "<td>" + $(row).find("lat").text() + "</td>"​
+							+ "<td>" + $(row).find("shel_av").text() + "</td>"
+							+ "<td>" + $(row).find("lenth").text() + "</td>"
+							+ "<td>" + $(row).find("shel_div_type").text() + "</td>"
+							+ "<td>" + $(row).find("seismic").text() + "</td>"​​
+							+ "<td>" + $(row).find("height").text() + "</td>"
+							+ "</tr>";
+							
+					$tbody.html(bodyTr);
+					$table.append($thead, $tbody)
+					 	  . appendTo("#result");
+				}
+			},
+			error : (xhr, textStatus, err) => {
+				console.log(xhr, testStatus, err);
+			}
+		});
+	});
+	</script>
+
+	<script>
+	$(function(){
+		$("#btn").click(function(){
+			$.ajax({
+				url:"controller 매핑값 어쩌구저쩌구",
+				success:(data) =>{
+				let $table = $("<table></table>");
+				let $thead = $("<thead></thead>");
+				let headTr = "<tr>"
+							+ "<td>일렬번호</td>"
+							+ "<td>시도명</td>"
+							+ "<td>시군구 명</td>"
+							+ "<td>대피 지구 명</td>"​
+							+ "<td>대피 장소 명</td>"
+							+ "<td>주소</td>"
+							+ "<td>경도</td>"
+							+ "<td>위도</td>"​
+							+ "<td>수용 가능인원</td>"
+							+ "<td>해변으로 부터 거리</td>"
+							+ "<td>대피소 분류명</td>"
+							+ "<td>내진적용여부</td>"
+							+ "<td>해발높이</td>"​​
+							+ "</tr>";
+				$thead.html(headTr);
+				let $tbody = $("<tbody></tbody>");
+				let bodyTr = "";
+				$(data).find("row").each(function(i, row){ 
+				bodyTr += "<tr>"
+						+ "<td>" + $(row).find("id").text() + "</td>"
+						+ "<td>" + $(row).find("sido_name").text() + "</td>"
+						+ "<td>" + $(row).find("sigungu_name").text() + "</td>"
+						+ "<td>" + $(row).find("remarks").text() + "</td>" 
+						+ "<td>" + $(row).find("remarks").text() + "</td>"​
+						+ "<td>" + $(row).find("shel_nm").text() + "</td>"
+						+ "<td>" + $(row).find("address").text() + "</td>"
+						 + "<td>" + $(row).find("lon").text() + "</td>"​
+						 + "<td>" + $(row).find("lat").text() + "</td>"​
+						+ "<td>" + $(row).find("shel_av").text() + "</td>"
+						+ "<td>" + $(row).find("lenth").text() + "</td>"
+						+ "<td>" + $(row).find("shel_div_type").text() + "</td>"
+						+ "<td>" + $(row).find("seismic").text() + "</td>"​​
+						+ "<td>" + $(row).find("height").text() + "</td>"​​
+						+ "</tr>";
+		                  })
+				$tbody.html(bodyTr); 
+				$table.append($thead, $tbody).appendTo("#result");
+				},
+				error:function(xhr, textStatus, err){
+					console.log(xhr, textStatus, err​)
+				}
+			});
+		})
+		})
+
+</script>
+	<input type="button" value="실행" id="btn" />
+	<div id="result-container"></div>
+	<script>
+	$("#btn").click(() => {
+			$.ajax({
+				success : data => {
+					var $table = $("<table></table>"); //동적으로 생성할 table 태그 선언
+					var $thead = $("<thead></thead>");
+					var header = "<tr>"
+						+ "<td>일렬번호</td>"
+						+ "<td>시도명</td>"
+						+ "<td>시군구명</td>"
+						+ "<td>대피지구명</td>"
+						+ "<td>대피장소명</td>"
+						+ "<td>주소</td>"
+						+ "<td>경도</td>"
+						+ "<td>위도</td>"
+						+ "<td>수용가능인원(명)</td>"
+						+ "<td>해변으로부터거리</td>"
+						+ "<td>대피소분류명</td>"
+						+ "<td>내진적용여부</td>"
+						+ "<td>해발높이</td>"
+						+ "</tr>";
+						
+			$thead.html(header);
+			
+			let $tbody = $("<tbody></tbody>");
+			let bodyTr = "";
+			
+			$(data).find("row").each((i, row) => {
+				bodyTr += "<tr>"
+						+ "<td>" + $(row).find("id").text() + "</td>"
+						+ "<td>" + $(row).find("sido_name").text() + "</td>"
+						+ "<td>" + $(row).find("sigungu_name").text() + "</td>"
+						+ "<td>" + $(row).find("remarks").text() + "</td>" 
+						+ "<td>" + $(row).find("remarks").text() + "</td>"​
+						+ "<td>" + $(row).find("shel_nm").text() + "</td>"
+						+ "<td>" + $(row).find("address").text() + "</td>"
+						+ "<td>" + $(row).find("lon").text() + "</td>"​
+						+ "<td>" + $(row).find("lat").text() + "</td>"​
+						+ "<td>" + $(row).find("shel_av").text() + "</td>"
+						+ "<td>" + $(row).find("lenth").text() + "</td>"
+						+ "<td>" + $(row).find("shel_div_type").text() + "</td>"
+						+ "<td>" + $(row).find("seismic").text() + "</td>"​​
+						+ "<td>" + $(row).find("height").text() + "</td>"
+						+ "</tr>";
+						
+				$tbody.html(bodyTr);
+					});
+					
+					table.append(thead, tbody);
+					$("#result-container").html(table);
+				},
+				error:function(){
+		               console.log("ajax 통신 실패!!"); 
+		        }
+			});
+		});
+	</script>
+
+
+
+	
 </body>
 </html>
