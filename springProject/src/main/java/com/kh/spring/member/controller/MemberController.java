@@ -329,4 +329,27 @@ public class MemberController {
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	/* test
+	@Controller
+	public class MemberController {
+	    
+	    @Autowired
+	    private MemberService mService;
+
+	    @RequestMapping("login")
+		public String memberLogin(Member m, HttpSession session) {
+			
+			Member loginUser = mService.loginMember(m);
+			
+			if (loginUser == null) {
+				session.setAttribute("msg", "로그인 실패");
+				return "redirect:/login";
+			} else {
+				session.setAttribute("loginUser", loginUser);
+				return "redirect:/";
+			}
+		}
+	}
+	*/
+	
 }
