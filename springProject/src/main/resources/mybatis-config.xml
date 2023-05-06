@@ -11,6 +11,7 @@
 		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.kh.spring.board.model.vo.Reply" alias="Reply"/>
 	</typeAliases>
+
 	<!-- 유의사항 : 미리 등록해두려면 해당 클래스가 진짜 존재하고 있는 상태여야함 -->
 	
 	<!-- 
@@ -23,6 +24,7 @@
 	 	<mapper resource="/mappers/member-mapper.xml"/>
 	 	<mapper resource="/mappers/board-mapper.xml"/>
 	 </mappers>
+	 
 	 <!-- 유의사항 : 미리 등록해두려면 해당 mapper 파일이 진짜 존재하고 있는 상태여야함
 	 			  뿐만 아니라 namespace 등록까지 지정되어 있어야함 -->
 	 			  

@@ -144,7 +144,7 @@
 				})
 			} else {
 				alertify.alert("댓글 작성 후 등록 요청해주세요!");
-			}
+			} 
 		}
 		
 		function selectReplyList() { // 해당 게시글에 달린 댓글리스트 조회용 ajax

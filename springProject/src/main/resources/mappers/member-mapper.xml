@@ -16,6 +16,26 @@
 	<result column="status" property="status"/>
 </resultMap>
 
+<!-- test
+<resultMap id="memberResultSet" type="Member">
+    <result column="member_id" property="memberId"/>
+    <result column="member_pwd" property="memberPwd"/>
+    <result column="member_nm" property="memberName"/>
+    <result column="member_enroll_dt" property="memberEnrollDate"/>
+</resultMap>
+
+<select id="loginMember" resultMap="memberResultSet">
+	select
+		   member_id
+		 , member_pwd
+		 , member_nm
+		 , member_enroll_dt
+	  from member
+	 where member_id = #{memberId}
+	   and member_pwd = #{memberPwd}
+</select> -->
+
+
 	<select id="loginMember" resultMap="memberResultSet">
 	<!-- 비밀번호 암호화 하기 전
 	select
