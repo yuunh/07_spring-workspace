@@ -42,7 +42,7 @@
                     <tr>
                         <th colspan="2"><label for="content">내용</label></th>
                     </tr>
-                    <tr>
+                    <tr> 
                         <th colspan="2">
                             <textarea class="form-control" required name="boardContent" id="content" rows="10" style="resize:none;"></textarea>
                         </th>
