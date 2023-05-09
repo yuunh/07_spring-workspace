@@ -173,7 +173,7 @@ public class BoardController {
 		// 		>> 에러문구 담아서 에러페이지 포워딩
 			/*
 			model.addAttribute("errorMsg", "게시글 상세 조회 실패!");
-			
+			 
 			return "common/errorPage";
 			*/
 			
