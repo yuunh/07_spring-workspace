@@ -314,5 +314,5 @@ public class BoardController {
 		// System.out.println(new Gson().toJson(list));
 		
 		return new Gson().toJson(list);
-	}
+	} 
 }
