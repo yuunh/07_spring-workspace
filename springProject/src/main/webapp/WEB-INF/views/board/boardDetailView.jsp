@@ -58,7 +58,7 @@
                 <tr>
                     <td colspan="4"><p style="height:150px">${ b.boardContent }</p></td>
                 </tr>
-            </table>
+            </table> 
             <br>
 
 			<c:if test="${not empty loginUser.userId and loginUser.userId eq b.boardWriter }">
