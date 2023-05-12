@@ -70,7 +70,7 @@ public class BoardController {
 		
 		return mv;
 	}
-	
+	 
 	@RequestMapping("enrollForm.bo")
 	public String enrollForm() {
 		
