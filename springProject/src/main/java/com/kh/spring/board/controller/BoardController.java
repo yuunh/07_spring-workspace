@@ -112,7 +112,7 @@ public class BoardController {
 			String changeName = currentTime + ranNum + ext;
 			
 			// 업로드 시키고자 하는 폴더의 물리적인 경로 알아내기
-			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/"); // "/" 쓰면 webapp 가리킴
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/"); // "/" 쓰면 webapp 가리킴 
 			
 			// 서버에 파일을 업로드
 			try {
