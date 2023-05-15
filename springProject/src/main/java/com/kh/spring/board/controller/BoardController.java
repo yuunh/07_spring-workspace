@@ -121,7 +121,7 @@ public class BoardController {
 				e.printStackTrace();
 			}
 			*/
-			
+			 
 			String changeName = saveFile(upfile, session);
 			
 			b.setOriginName(upfile.getOriginalFilename());
