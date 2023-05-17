@@ -276,7 +276,7 @@ public class MemberController {
 			model.addAttribute("errorMsg", "회원정보 변경 실패!");
 			return "common/errorPage";
 		}
-	} 
+	}                      
 	
 	@RequestMapping("delete.me")
 	public String deleteMember(String userPwd, String userId, HttpSession session, Model model) {
