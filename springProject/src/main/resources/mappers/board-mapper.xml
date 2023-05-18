@@ -26,7 +26,7 @@
 		  from board
 		 where status = 'Y'
 	</select>
-	
+	 
 	<select id="selectList" resultMap="boardResultSet">
 		select
 		       board_no
